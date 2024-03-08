@@ -60,13 +60,54 @@ fileInput.addEventListener("change", () => {
 });
 
 const uploadFile = () => {
-  // TODO
-  console.log("On file upload");
+  uploadView.style.display = "none";
+  progressView.style.display = "block";
+  postUploadView.style.display = "none";
+
+  const file = fileInput.files[0];
+  const formData = new FormData();
+  formData.append("myFile", file);
+
+  const xhr = new XMLHttpRequest();
+
+  xhr.upload.onprogress = function (event) {
+    let percent = Math.round((100 * event.loaded) / event.total);
+    progressBar.style.width = `${percent}%`;
+  };
+
+  xhr.upload.onerror = function () {
+    showToast(`Error in upload: ${xhr.status}.`);
+    fileInput.value = "";
+  };
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+      onFileUploadSuccess(xhr.responseText);
+    }
+  };
+
+  xhr.open("POST", "/api/files");
+  xhr.send(formData);
 };
 
 const onFileUploadSuccess = (res) => {
-  // TODO
-  console.log("On file upload success");
+  fileInput.value = "";
+  const { file: url } = JSON.parse(res);
+  fileURL.value = url;
+
+  uploadView.style.display = "none";
+  progressView.style.display = "none";
+  postUploadView.style.display = "flex";
+  statusText.innerText = "Upload completed!";
+
+  setTimeout(() => {
+    const checkmark = document.querySelectorAll(".check-icon");
+    checkmark.forEach((el) => (el.style.display = "none"));
+  }, 2500);
+
+  setTimeout(() => {
+    anims.forEach((el) => el.classList.add("fade-in"));
+  }, 300);
 };
 
 let toastTimer;
