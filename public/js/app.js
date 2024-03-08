@@ -10,6 +10,8 @@ const fileInput = document.getElementById("fileInput");
 const browseBtn = document.getElementById("fileSelectBtn");
 
 const sharingContainer = document.querySelector(".sharing-container");
+const copyURLBtn = document.getElementById("copyURLBtn");
+const fileURL = document.getElementById("fileURL");
 const goBackBtn = document.getElementById("goBackBtn");
 const toast = document.querySelector(".toast");
 
@@ -109,6 +111,16 @@ const onFileUploadSuccess = (res) => {
     anims.forEach((el) => el.classList.add("fade-in"));
   }, 300);
 };
+
+copyURLBtn.addEventListener("click", () => {
+  fileURL.select();
+  document.execCommand("copy");
+  showToast("Download link copied to clipboard");
+});
+
+fileURL.addEventListener("click", () => {
+  fileURL.select();
+});
 
 let toastTimer;
 const showToast = (msg) => {
