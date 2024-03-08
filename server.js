@@ -19,10 +19,11 @@ app.set("views", path.join(__dirname, "/views"));
 app.set("view engine", "ejs");
 
 app.use("/", require("./routes/home"));
+app.use("/uploaded-files", require("./routes/listing"));
+app.use("/cleanup", require("./routes/cleanup"));
 app.use("/api/files", require("./routes/files"));
 app.use("/files", require("./routes/filePreview"));
 app.use("/files/download", require("./routes/download"));
-app.use("/uploaded-files", require("./routes/listing"));
 
 app.listen(PORT, () => {
   console.log(`Listening to port ${PORT}`);
