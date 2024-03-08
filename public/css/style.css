@@ -511,6 +511,12 @@ strong {
   background-position: 20px center;
 }
 
+.share-link button.home span {
+  background: url('../img/home.svg') no-repeat;
+  background-size: 18px;
+  background-position: 20px center;
+}
+
 .email-form {
   flex-direction: column;
   align-items: center;

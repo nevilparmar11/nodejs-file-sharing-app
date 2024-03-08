@@ -4,16 +4,24 @@ const progressBar = document.querySelector("#progressBar");
 const postUploadView = document.querySelector(".postupload-ui");
 const anims = document.querySelectorAll(".will-fade-in");
 const statusText = document.querySelector(".complete-text");
+const qrcode = document.querySelector("#qrcode");
 
 const dropzone = document.querySelector(".dropzone");
 const fileInput = document.getElementById("fileInput");
 const browseBtn = document.getElementById("fileSelectBtn");
 
+const qrImg = document.querySelector("#qrCodeSrc");
 const sharingContainer = document.querySelector(".sharing-container");
 const copyURLBtn = document.getElementById("copyURLBtn");
 const fileURL = document.getElementById("fileURL");
+const emailBtn = document.getElementById("emailBtn");
+const emailFormContainer = document.getElementById("emailForm");
+const emailForm = document.getElementById("mailForm");
+const emailSendBtn = document.getElementById("emailSendBtn");
 const goBackBtn = document.getElementById("goBackBtn");
 const toast = document.querySelector(".toast");
+
+const cleanupBtn = document.querySelector("#cleanup-btn");
 
 const maxAllowedFileSize = 100 * 1024 * 1024;
 const maxAllowedFileSizeInWords = "100MB";
@@ -94,18 +102,22 @@ const uploadFile = () => {
 
 const onFileUploadSuccess = (res) => {
   fileInput.value = "";
-  const { file: url } = JSON.parse(res);
+  const { file: url, qr } = JSON.parse(res);
   fileURL.value = url;
 
   uploadView.style.display = "none";
   progressView.style.display = "none";
   postUploadView.style.display = "flex";
   statusText.innerText = "Upload completed!";
+  if (qr) {
+    qrImg.src = qr;
 
-  setTimeout(() => {
-    const checkmark = document.querySelectorAll(".check-icon");
-    checkmark.forEach((el) => (el.style.display = "none"));
-  }, 2500);
+    setTimeout(() => {
+      qrcode.style.display = "flex";
+      const checkmark = document.querySelectorAll(".check-icon");
+      checkmark.forEach((el) => (el.style.display = "none"));
+    }, 2500);
+  }
 
   setTimeout(() => {
     anims.forEach((el) => el.classList.add("fade-in"));
@@ -120,6 +132,51 @@ copyURLBtn.addEventListener("click", () => {
 
 fileURL.addEventListener("click", () => {
   fileURL.select();
+});
+
+emailBtn.addEventListener("click", () => {
+  emailFormContainer.style.display = "flex";
+});
+
+emailForm.addEventListener("submit", (e) => {
+  e.preventDefault(); // stop submission
+
+  emailSendBtn.setAttribute("disabled", "disabled");
+  emailSendBtn.innerHTML = "<span>Sending..</span>";
+
+  const url = fileURL.value;
+
+  const formData = {
+    uuid: url.split("/").splice(-1, 1)[0],
+    recipient: emailForm.elements["mail_to"].value,
+    sender: emailForm.elements["mail_from"].value,
+  };
+
+  fetch("/api/files/sendmail", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.success) {
+        showToast("Email successfully sent");
+        document.getElementById("emailTo").value = "";
+        emailSendBtn.innerHTML = "<span>Send</span>";
+        emailSendBtn.removeAttribute("disabled");
+      } else {
+        showToast("Something went wrong");
+        emailSendBtn.innerHTML = "<span>Retry</span>";
+        emailSendBtn.removeAttribute("disabled");
+      }
+    })
+    .catch(() => {
+      showToast("Something went wrong");
+      emailSendBtn.innerHTML = "<span>Send</span>";
+      emailSendBtn.removeAttribute("disabled");
+    });
 });
 
 let toastTimer;

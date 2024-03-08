@@ -2,6 +2,7 @@ const router = require("express").Router();
 const multer = require("multer");
 const { v4: uuid4 } = require("uuid");
 const path = require("path");
+const qr = require("qrcode");
 const File = require("../models/file");
 const constants = require("../constants/file-constants");
 
@@ -44,10 +45,74 @@ router.post("/", (req, res) => {
 
     const response = await file.save();
     const fileUrl = `${process.env.APP_BASE_URL}/files/${response.uuid}`;
-    return res.status(200).json({
-      file: fileUrl,
+    qr.toDataURL(fileUrl, (err, src) => {
+      return res.status(200).json({
+        file: fileUrl,
+        qr: err ? null : src,
+      });
     });
   });
+});
+
+router.post("/sendmail", async (req, res) => {
+  const { uuid, sender, recipient } = req.body;
+
+  if (!uuid || !sender || !recipient) {
+    return res.status(400).send({
+      error: "Missing required fields",
+    });
+  }
+
+  try {
+    const file = await File.findOne({
+      uuid: uuid,
+    });
+
+    if (!file.sender) {
+      file.sender = sender;
+      file.recipients = [recipient];
+    } else {
+      if (file.recipients.includes(recipient)) {
+        return res.status(422).send({
+          error: `Email already sent to ${recipient}.`,
+        });
+      } else {
+        file.recipients.push(recipient);
+      }
+    }
+
+    await file.save();
+    const sendMail = require("../services/emailService");
+    sendMail({
+      from: sender,
+      to: recipient,
+      subject: "New Shared File",
+      text: `${sender} shared a file with you.`,
+      html: require("../services/emailTemplate")({
+        sender,
+        downloadLink: `${process.env.APP_BASE_URL}/files/${file.uuid}?source=email`,
+        size: parseInt(file.size / 1000) + " KB",
+        siteLink: process.env.APP_BASE_URL,
+        expires: "24 hours",
+      }),
+    })
+      .then(() => {
+        return res.json({
+          success: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json({
+          error: "Error in email sending.",
+        });
+      });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send({
+      error: "Something went wrong.",
+    });
+  }
 });
 
 module.exports = router;
