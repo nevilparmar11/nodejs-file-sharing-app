@@ -1,21 +1,10 @@
-![Project Logo](https://user-images.githubusercontent.com/48133426/116282919-f6175280-a7a8-11eb-8b9c-72af7a199dfc.png)
+# About
+File-sharing application built with Node.js. Drag-n-drop / upload your file and it'll be uploaded to the server. The shareable link will be generated and anyone with the link can download the file within 24 hours. Links can be shared via email also.
 
-# Project-Name
- - Add description
-
-
-# Scope of the project
-- scope 1
-- scope 2
- 
-# Technologies used
-- list all the tech used here
-
-# Documentation
-- add documents links / previews (if any)
+[Try it here](https://file-sharing-np.onrender.com/)
  
 ## UI 💻
-<img src="https://user-images.githubusercontent.com/48133426/102998463-32157f00-454d-11eb-88ac-d9d68edc0600.png" width="45%"></img> <img src="https://user-images.githubusercontent.com/48133426/102998469-3346ac00-454d-11eb-8ceb-e812f8f76673.png" width="45%"></img> <img src="https://user-images.githubusercontent.com/48133426/102998471-33df4280-454d-11eb-991f-d92c0fd88567.png" width="45%"></img> <img src="https://user-images.githubusercontent.com/48133426/102998472-3477d900-454d-11eb-82c8-252da2924b82.png" width="45%"></img> <img src="https://user-images.githubusercontent.com/48133426/102998476-35a90600-454d-11eb-881b-af6b668c2fa3.png" width="45%"></img> <img src="https://user-images.githubusercontent.com/48133426/102998477-36419c80-454d-11eb-8e1a-b3dede5b88b2.png" width="45%"></img> <img src="https://user-images.githubusercontent.com/48133426/102998479-36da3300-454d-11eb-803d-c87adbdae102.png" width="45%"></img> <img src="https://user-images.githubusercontent.com/48133426/102998481-3772c980-454d-11eb-9298-b32781585f89.png" width="45%"></img> <img src="https://user-images.githubusercontent.com/48133426/102998482-380b6000-454d-11eb-8eb6-c95668d75d1e.png" width="45%"></img> <img src="https://user-images.githubusercontent.com/48133426/102998484-393c8d00-454d-11eb-81b1-0d880623fd33.png" width="45%"></img> 
+<img src="https://github.com/nevilparmar11/nodejs-file-sharing-app/assets/48133426/f4a868f6-ca50-480b-a9d1-d20282f62f28" width="45%"></img> <img src="https://github.com/nevilparmar11/nodejs-file-sharing-app/assets/48133426/93f8dbf5-2a9f-4208-b8a4-3735ac6df9fb" width="45%"></img> <img src="https://github.com/nevilparmar11/nodejs-file-sharing-app/assets/48133426/c2a608e8-d191-460e-99e9-ccdd7584061f" width="45%"></img><img src="https://github.com/nevilparmar11/nodejs-file-sharing-app/assets/48133426/d55c133e-786e-4360-9c19-d819f25481dc" width="45%"></img><img src="https://github.com/nevilparmar11/nodejs-file-sharing-app/assets/48133426/461595b7-c97c-47ab-8a1c-dfd6dcbceeb5" width="45%"></img><img src="https://github.com/nevilparmar11/nodejs-file-sharing-app/assets/48133426/a9f27aaf-c552-47fb-b2c4-4c189aa7035c" width="45%"></img>
 
 
 ---------
@@ -31,4 +20,4 @@ if (youEnjoyed) {
 -----------
 
 ## Thank You
-- Author : [Nevil Parmar](https://nevilparmar.me)
+- Author : [Nevil Parmar](https://nevilparmar.netlify.app/)
