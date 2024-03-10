@@ -1,5 +1,10 @@
 # About
-File-sharing application built with Node.js. Drag-n-drop / upload your file and it'll be uploaded to the server. The shareable link will be generated and anyone with the link can download the file within 24 hours. Links can be shared via email also.
+- File-sharing application built with Node.js. Allows users to upload files to the server via
+drag-and-drop or traditional upload methods.
+- Generates shareable links for an uploaded file. Users can download file using the
+generated link or by scanning the QR code within 24 hours. The link can also be shared via an
+email.
+- Admin can view and perform cleanup for older files
 
 [Try it here](https://file-sharing-np.onrender.com/)
  
