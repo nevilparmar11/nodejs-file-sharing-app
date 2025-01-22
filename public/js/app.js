@@ -23,8 +23,8 @@ const toast = document.querySelector(".toast");
 
 const cleanupBtn = document.querySelector("#cleanup-btn");
 
-const maxAllowedFileSize = 100 * 1024 * 1024;
-const maxAllowedFileSizeInWords = "100MB";
+const maxAllowedFileSize = 500 * 1024 * 1024;
+const maxAllowedFileSizeInWords = "500MB";
 
 window.addEventListener("DOMContentLoaded", (event) => {
   anims.forEach((el) => el.classList.remove("fade-in"));
